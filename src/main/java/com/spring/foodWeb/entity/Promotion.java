@@ -1,4 +1,4 @@
-package com.spring.foodWeb.Entity;
+package com.spring.foodWeb.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,29 +7,29 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "Orders")
-public class Order {
+@Table(name = "Promotion")
+public class Promotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "create_date")
-    private Date createDate;
+    @Column(name = "percent")
+    private Integer percent;
+
+    @Column(name = "start_date")
+    private Date startDate;
+
+    @Column(name = "end_date")
+    private Date endDate;
 
     @ManyToOne
     @JoinColumn(name = "res_id")
     private Restaurant restaurant;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
-    @OneToMany(mappedBy = "key.order")
-    private Set<OrderItem> listOrderItem;
 }

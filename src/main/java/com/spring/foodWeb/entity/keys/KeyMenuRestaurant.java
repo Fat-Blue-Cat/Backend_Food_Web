@@ -1,7 +1,7 @@
-package com.spring.foodWeb.Entity.keys;
+package com.spring.foodWeb.entity.keys;
 
-import com.spring.foodWeb.Entity.Food;
-import com.spring.foodWeb.Entity.Order;
+import com.spring.foodWeb.entity.Category;
+import com.spring.foodWeb.entity.Restaurant;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -12,18 +12,18 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
+@Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Embeddable
-public class KeyOrderItem implements Serializable {
+public class KeyMenuRestaurant implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JoinColumn(name = "cate_id")
+    private Category category;
 
+    @JoinColumn(name = "res_id")
     @ManyToOne
-    @JoinColumn(name = "food_id")
-    private Food food;
+    private Restaurant restaurant;
 }

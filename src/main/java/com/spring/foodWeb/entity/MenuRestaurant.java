@@ -1,6 +1,6 @@
-package com.spring.foodWeb.Entity;
+package com.spring.foodWeb.entity;
 
-import com.spring.foodWeb.Entity.keys.KeyMenuRestaurant;
+import com.spring.foodWeb.entity.keys.KeyMenuRestaurant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

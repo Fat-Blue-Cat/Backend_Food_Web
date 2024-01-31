@@ -1,6 +1,6 @@
-package com.spring.foodWeb.Entity;
+package com.spring.foodWeb.entity;
 
-import com.spring.foodWeb.Entity.keys.KeyOrderItem;
+import com.spring.foodWeb.entity.keys.KeyOrderItem;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.spring.foodWeb.Entity;
+package com.spring.foodWeb.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

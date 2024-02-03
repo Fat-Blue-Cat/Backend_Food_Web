@@ -8,3 +8,6 @@ spring:
     hibernate:
 #      ddl-auto: update
     show-sql: 'true'
+
+jwt:
+  secretary: daf66e01593f61a15b857cf433aae03a005812b31234e149036bcc8dee755dbb

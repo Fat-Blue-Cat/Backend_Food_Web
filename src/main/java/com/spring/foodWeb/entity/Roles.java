@@ -16,7 +16,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "Roles")
-public class Role {
+public class Roles {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +30,5 @@ public class Role {
     private  Date createDate;
 
     @OneToMany(mappedBy = "role")
-    private Set<User> user = new HashSet<>();
+    private Set<Users> user = new HashSet<>();
 }

@@ -1,13 +1,11 @@
 package com.spring.foodWeb.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +16,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "Users")
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +36,7 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    private  Role role = new Role();
+    private Roles role = new Roles();
 
     @OneToMany(mappedBy = "user")
     private Set<Rating> listRating = new HashSet<>();

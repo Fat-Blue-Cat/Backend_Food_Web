@@ -1,12 +1,13 @@
 package com.spring.foodWeb.service;
 
 import com.spring.foodWeb.dto.UserDTO;
-import com.spring.foodWeb.entity.Role;
-import com.spring.foodWeb.entity.User;
+import com.spring.foodWeb.entity.Roles;
+import com.spring.foodWeb.entity.Users;
 import com.spring.foodWeb.repository.UserRepository;
 import com.spring.foodWeb.request.SignupRequest;
 import com.spring.foodWeb.service.impl.LoginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,13 +17,15 @@ import java.util.List;
 public class LoginService implements LoginServiceImpl {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     public List<UserDTO> getAllUser() {
-        List<User> listUser = userRepository.findAll();
+        List<Users> listUser = userRepository.findAll();
         List<UserDTO> userDTOList = new ArrayList<>();
 
-        for(User user: listUser){
+        for(Users user: listUser){
             UserDTO userDTO = new UserDTO();
             userDTO.setUserName(user.getUserName());
             userDTO.setId(user.getId());
@@ -37,15 +40,16 @@ public class LoginService implements LoginServiceImpl {
 
     @Override
     public Boolean checkLogin(String userName, String password) {
-        List<User> listUser = userRepository.findByUserNameAndPassword(userName,password);
+        Users user = userRepository.findByUserName(userName);
 
-        return listUser.size()>0;
+
+        return passwordEncoder.matches(password, user.getPassword());
     }
 
     @Override
     public Boolean addUser(SignupRequest signupRequest) {
-        Role role = new Role();
-        User user = new User();
+        Roles role = new Roles();
+        Users user = new Users();
         role.setId(signupRequest.getRoleId());
         user.setUserName(signupRequest.getEmail());
         user.setFullName(signupRequest.getFullName());

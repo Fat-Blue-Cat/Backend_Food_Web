@@ -15,4 +15,7 @@ public interface RestaurantServiceImpl {
                                 String address,
                                 String openDate);
     List<RestaurantDTO> getHomePageRestaurant();
+
+    RestaurantDTO getDetailRestaurant(int id);
+
 }

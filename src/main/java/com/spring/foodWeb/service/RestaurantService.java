@@ -1,8 +1,9 @@
 package com.spring.foodWeb.service;
 
+import com.spring.foodWeb.dto.CategoryDTO;
+import com.spring.foodWeb.dto.MenuDTO;
 import com.spring.foodWeb.dto.RestaurantDTO;
-import com.spring.foodWeb.entity.RatingRestaurant;
-import com.spring.foodWeb.entity.Restaurant;
+import com.spring.foodWeb.entity.*;
 import com.spring.foodWeb.repository.RestaurantRepository;
 import com.spring.foodWeb.service.impl.FileServiceImpl;
 import com.spring.foodWeb.service.impl.RestaurantServiceImpl;
@@ -13,10 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class RestaurantService implements RestaurantServiceImpl {
@@ -65,6 +63,7 @@ public class RestaurantService implements RestaurantServiceImpl {
         for (Restaurant data:listData){
             RestaurantDTO restaurantDTO = new RestaurantDTO();
             restaurantDTO.setTitle(data.getTitle());
+            restaurantDTO.setId(data.getId());
             restaurantDTO.setImage(data.getImage());
             restaurantDTO.setFreeShip(data.getIsFreeShip());
             restaurantDTO.setSubTitle(data.getSubtitle());
@@ -73,6 +72,52 @@ public class RestaurantService implements RestaurantServiceImpl {
             restaurantDTOList.add(restaurantDTO);
         }
         return restaurantDTOList;
+    }
+
+    @Override
+    public RestaurantDTO getDetailRestaurant(int id) {
+        Optional<Restaurant> restaurant = restaurantRepository.findById(id);
+        RestaurantDTO restaurantDTO = new RestaurantDTO();
+
+        if(restaurant.isPresent()){
+            List<CategoryDTO> categoryDTOList = new ArrayList<>();
+
+            Restaurant data = restaurant.get();
+            restaurantDTO.setTitle(data.getTitle());
+            restaurantDTO.setImage(data.getImage());
+            restaurantDTO.setSubTitle(data.getSubtitle());
+            restaurantDTO.setDesc(data.getDescription());
+            restaurantDTO.setRating(caculatorRating(data.getListRatingRestaurant()));
+            restaurantDTO.setFreeShip(data.getIsFreeShip());
+            restaurantDTO.setOpenDate(data.getOpenDate());
+
+
+            for(MenuRestaurant menuRestaurant: data.getMenuRestaurants()){
+                List<MenuDTO> menuDTOList = new ArrayList<>();
+                CategoryDTO categoryDTO = new CategoryDTO();
+
+                categoryDTO.setName(menuRestaurant.getKey().getCategory().getNameCate());
+                for (Food food: menuRestaurant.getKey().getCategory().getListFood()){
+                    System.out.println(food.getTitle());
+
+                    MenuDTO menuDTO = new MenuDTO();
+                    menuDTO.setImage(food.getImage());
+                    menuDTO.setFreeShip(food.getIsFreeShip());
+                    menuDTO.setTitle(food.getTitle());
+                    menuDTO.setPrice(food.getPrice());
+                    menuDTO.setDesc(food.getDescription());
+                    menuDTO.setId(food.getId());
+                    menuDTOList.add(menuDTO);
+                }
+                categoryDTO.setMenuDTOList(menuDTOList);
+                categoryDTOList.add(categoryDTO);
+
+            }
+            restaurantDTO.setCategoryDTOList(categoryDTOList);
+
+        }
+
+        return restaurantDTO;
     }
 
     public double caculatorRating(Set<RatingRestaurant> listRating){

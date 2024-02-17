@@ -34,6 +34,9 @@ public class Food {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "description")
+    private String description;
+
     @OneToMany(mappedBy = "food")
     private Set<Rating> listRating;
 
@@ -43,4 +46,6 @@ public class Food {
 
     @OneToMany(mappedBy = "key.food")
     private Set<OrderItem> listOrderItem;
+
+
 }

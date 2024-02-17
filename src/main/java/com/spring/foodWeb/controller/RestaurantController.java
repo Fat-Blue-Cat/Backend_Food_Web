@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("restaurant")
+@RequestMapping("/restaurant")
 public class RestaurantController {
 
     @Autowired
@@ -57,5 +57,13 @@ public class RestaurantController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
+    }
+
+    @GetMapping("/detail")
+    public ResponseEntity<?> getDetailRestaurant(@RequestParam int id){
+        ResponseData responseData = new ResponseData();
+        responseData.setData(restaurantServiceImpl.getDetailRestaurant(id));
+
+        return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 }
